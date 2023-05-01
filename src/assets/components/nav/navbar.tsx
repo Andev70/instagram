@@ -8,7 +8,7 @@ const Navbar = () => {
       <div className="insta-icon-body w-[48px] h-[92px] flex justify-start items-center ">
         <span className="for-focus w-full h-[48px] rounded-full flex justify-center items-center">
           <Link
-            to="/"
+            to="/users"
             className="w-max h-max flex justify-center
           items-center"
           >
@@ -23,7 +23,7 @@ const Navbar = () => {
       {/*instagram icon end*/}
       {/* home icon start*/}
       <section className="home-icon w-full h-[64px] flex justify-center items-center">
-        <Link to="/">
+        <Link to="/users">
           <span className="home-focus w-[48px] h-[48px] flex rounded-full justify-center items-center ">
             <svg
               aria-label="Home"
@@ -52,7 +52,7 @@ const Navbar = () => {
       <section className="search-icon w-full h-[64px] flex justify-center items-center">
         <Link
           className="rounded-full w-max h-max flex justify-center items-center"
-          to="/search"
+          to="search"
         >
           <span className="search-focus w-[48px] h-[48px] flex rounded-full justify-center items-center ">
             <svg
@@ -156,7 +156,7 @@ const Navbar = () => {
 
       {/* messanger icon start*/}
       <section className="messanger-icon w-full h-[64px] flex justify-center items-center">
-        <Link to="/messanger">
+        <Link to="/direct/inbox">
           <span className="messanger-focus w-[48px] h-[48px] flex rounded-full justify-center items-center ">
             <svg
               aria-label="Messenger"

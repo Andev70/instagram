@@ -17,7 +17,7 @@ const MessangerHeader = () => {
     <div className="header-wrapper w-full h-[44px] pl-4 pr-4 border-b border-gray-300">
       <header className="header-info w-full h-full flex items-center ">
         <div className="back-parent w-[32px] h-[24px]">
-          <Link to="/">
+          <Link to="/users">
             <span className="back-home w-[24px] h-full flex justify-center items-center">
               <svg
                 aria-label="Back"

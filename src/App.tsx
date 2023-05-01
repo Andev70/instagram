@@ -45,7 +45,7 @@ const CompleteApp = () => {
         <Route path="reels" element={<Reels />} />
       </Route>
       {/* this is for the messanger and the error 404 */}
-      <Route path="messanger" element={<Messanger />} />
+      <Route path="/direct/inbox" element={<Messanger />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
