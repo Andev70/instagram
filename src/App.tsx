@@ -1,4 +1,5 @@
 import { useSelector } from "react-redux";
+import TestApi from "./test/test-api";
 import {
   SignupForms,
   PageNotFound,
@@ -38,7 +39,7 @@ const CompleteApp = () => {
   return (
     <Routes>
       <Route path="/" element={<WelcomePage />} />
-
+      <Route path="/api" element={<TestApi />} />
       <Route path="/accounts/signup/phone" element={<SignupForms />}></Route>
       <Route path="/users" element={<InstagramUi />}>
         {/* this is a shared route for reel and search page also */}

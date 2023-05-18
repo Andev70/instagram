@@ -1,13 +1,23 @@
 import fs from "node:fs/promises";
 import express from "express";
 import dotenv from "dotenv";
+import expressFile from "express-fileupload";
+import cors from "cors";
+import testApi from "./routes/user-route.js";
 dotenv.config();
 import connectDB from "./db/db_connect.js";
+
 // Constants
 const isProduction = process.env.NODE_ENV === "production";
 const port = process.env.PORT || 5173;
 const base = process.env.BASE || "/";
 
+const app = express();
+app.use(expressFile({ debug: true }));
+app.use(cors());
+app.use(express.json());
+
+app.use("/api/test", testApi);
 // Cached production assets
 const templateHtml = isProduction
   ? await fs.readFile("./dist/client/index.html", "utf-8")
@@ -17,8 +27,6 @@ const ssrManifest = isProduction
   : undefined;
 
 // Create http server
-const app = express();
-
 // Add Vite or respective production middlewares
 let vite;
 if (!isProduction) {
@@ -78,5 +86,4 @@ const connectDBServer = async () => {
     console.log(`${e}`);
   }
 };
-
 connectDBServer();
