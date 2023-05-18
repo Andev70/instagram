@@ -1,7 +1,9 @@
+import { useSelector, useDispatch } from "react-redux";
 import "./welcome.scss";
 import { useState } from "react";
 import facebookLogo from "../../images/square-facebook.svg";
 import metaLogo from "../../images/meta-logo.svg";
+import { setLoginPage } from "../../../features/cart/cart";
 
 const WelcomePage = () => {
   return (
@@ -46,7 +48,10 @@ const WelcomeNav = () => {
 };
 
 const MainWelcomeArea = () => {
-  const [loginPage, setLoginPage] = useState(false);
+  const { loginPage } = useSelector((store) => {
+    return store.cart;
+  });
+
   return (
     <section className="main-welcome w-screen h-max flex justify-center pt-10">
       <div className="all-wel-wrap w-max h-max mt-3 pb-[60px] ">
@@ -56,11 +61,7 @@ const MainWelcomeArea = () => {
           </section>
           <div className="main-login-and-welcome w-full h-full">
             {/* here login or insta welcome shows conditionally*/}
-            {!loginPage ? (
-              <WelcomeContents setLoginPage={setLoginPage} />
-            ) : (
-              <LoginPage />
-            )}
+            {!loginPage ? <WelcomeContents /> : <LoginPage />}
           </div>
         </div>
       </div>
@@ -68,7 +69,8 @@ const MainWelcomeArea = () => {
   );
 };
 
-const WelcomeContents = ({ setLoginPage }: any) => {
+const WelcomeContents = () => {
+  const dispatch = useDispatch();
   return (
     <div className="wel-wrap w-full h-full pt-5">
       <section className="wel-contents-parent w-full text-center h-full flex flex-col items-center">
@@ -90,7 +92,7 @@ const WelcomeContents = ({ setLoginPage }: any) => {
           <button
             className="bring-login"
             onClick={() => {
-              setLoginPage(true);
+              dispatch(setLoginPage());
             }}
           >
             Login

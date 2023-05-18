@@ -7,7 +7,9 @@ import PageNotFound from "./error/404";
 import SearchContent from "./search/search";
 import WelcomePage from "./welcome-page/welcome";
 import SignupForms from "./signup-page/signup";
+import RQsuperheroPage from "./rq/rq";
 export {
+  RQsuperheroPage,
   SignupForms,
   WelcomePage,
   Navbar,

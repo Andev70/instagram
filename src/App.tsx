@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux";
 import {
   SignupForms,
   PageNotFound,
@@ -37,6 +38,7 @@ const CompleteApp = () => {
   return (
     <Routes>
       <Route path="/" element={<WelcomePage />} />
+
       <Route path="/accounts/signup/phone" element={<SignupForms />}></Route>
       <Route path="/users" element={<InstagramUi />}>
         {/* this is a shared route for reel and search page also */}
