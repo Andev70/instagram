@@ -1,0 +1,3 @@
+POST https://localhost:3000/api/test/vim
+Content-type:application/json
+{"data":{"name":"ak"}}
