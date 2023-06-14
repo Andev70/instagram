@@ -3,7 +3,7 @@ import express from "express";
 import dotenv from "dotenv";
 import expressFile from "express-fileupload";
 import cors from "cors";
-import testApi from "./routes/user-route.js";
+import todos from "./routes/todo-route.js";
 dotenv.config();
 import connectDB from "./db/db_connect.js";
 
@@ -13,11 +13,11 @@ const port = process.env.PORT || 5173;
 const base = process.env.BASE || "/";
 
 const app = express();
-app.use(expressFile({ debug: true }));
+// app.use(expressFile({ debug: true }));
 app.use(cors());
 app.use(express.json());
 
-app.use("/api/test", testApi);
+app.use("/api/todos", todos);
 // Cached production assets
 const templateHtml = isProduction
   ? await fs.readFile("./dist/client/index.html", "utf-8")
