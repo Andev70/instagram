@@ -2,7 +2,8 @@ import getTodos from "../controllers/todo-controller.js";
 import signup from "../controllers/signup.js";
 import postTodo from "../controllers/posttodo.js";
 import login from "../controllers/login.js";
-import getuser from "../controllers/user.js";
+import deleteTodo from "../controllers/del-todo.js";
+import getOneTodo from "../controllers/single-todo.js";
 import express from "express";
 const router = express.Router();
 
@@ -18,5 +19,6 @@ router.route("/login").post(login);
 // todo related
 router.route("/add/todo").post(postTodo);
 router.route("/todos").get(getTodos);
-
+router.route("/delete").delete(deleteTodo);
+router.route("/:todo_id").get(getOneTodo);
 export default router;

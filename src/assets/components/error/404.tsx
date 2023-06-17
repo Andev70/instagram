@@ -11,7 +11,7 @@ const PageNotFound = () => {
           We're sorry, but the page you're looking for cannot be found.
         </p>
         <Link
-          to="/users"
+          to="/"
           className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
         >
           Go back to homepage

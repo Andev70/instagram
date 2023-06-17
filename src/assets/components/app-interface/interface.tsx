@@ -3,14 +3,32 @@ import { useDispatch, useSelector } from "react-redux";
 import { setData, pushData } from "../../../features/data/data";
 import { setTitle } from "../../../features/data/title";
 import { useCookies } from "react-cookie";
-
-import { useState, useEffect } from "react";
+import { Link, Navigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const Interface = () => {
-  const [cookies, setCookie, remove, cookie] = useCookies();
+  const [cookies, setCookie, removeCookie] = useCookies();
   const { data } = useSelector((state) => state.data);
 
   const token = cookies.token;
+  const delTodo = async (e) => {
+    const id = e.target.value;
+    try {
+      const res = await fetch("/api/v1/delete", {
+        method: "DELETE",
+        headers: {
+          "Content-type": "application/json",
+          authorization: token,
+          id: id,
+        },
+      });
+      const data = res.json();
+      return data;
+    } catch (error) {
+      console.log(e.message);
+    }
+  };
+
   const dispatch = useDispatch();
   const { todoTitle } = useSelector((state) => state.title);
   const fetchTodos = async () => {
@@ -111,8 +129,31 @@ const Interface = () => {
                     <span className="text-gray-800">{todo.title}</span>
                   </div>
                   <div>
-                    <button className="text-gray-500 mr-2">Edit</button>
-                    <button className="text-gray-500">Delete</button>
+                    <Link to={`/todo/details/${todo._id}`}>
+                      <button
+                        value={todo._id}
+                        onClick={(e) => {
+                          const todoId = e.target.value;
+                          setCookie("todoId", todoId, { path: "/" });
+                        }}
+                        className="text-gray-500 mr-2"
+                      >
+                        Edit
+                      </button>
+                    </Link>
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        delTodo(e).then((res) => {
+                          console.log(res);
+                          dispatch(setData(res.todos));
+                        });
+                      }}
+                      value={todo._id}
+                      className="text-gray-500"
+                    >
+                      Delete
+                    </button>
                   </div>
                 </li>
               );

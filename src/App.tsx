@@ -5,6 +5,7 @@ import {
   SignupForm,
   HomeProtected,
   IfLogedin,
+  TodoDetails,
 } from "./assets/components/";
 import { Routes, Route, Link, Outlet } from "react-router-dom";
 
@@ -25,6 +26,14 @@ const CompleteApp = () => {
         element={
           <HomeProtected>
             <Interface />
+          </HomeProtected>
+        }
+      />
+      <Route
+        path="/todo/details/:id"
+        element={
+          <HomeProtected>
+            <TodoDetails />
           </HomeProtected>
         }
       />

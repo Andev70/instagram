@@ -30,8 +30,17 @@ const cartSlice = createSlice({
     setPassword: (state, action) => {
       state.password = action.payload;
     },
+    resetLogin: (state) => {
+      state.isLogedIn = false;
+    },
   },
 });
-export const { setTodos, setLogin, setPassword, setUsername, setEmail } =
-  cartSlice.actions;
+export const {
+  setTodos,
+  resetLogin,
+  setLogin,
+  setPassword,
+  setUsername,
+  setEmail,
+} = cartSlice.actions;
 export default cartSlice.reducer;
