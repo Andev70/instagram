@@ -1,22 +1,37 @@
 import { createSlice } from "@reduxjs/toolkit";
+
 // const { createSlice } = slicer;
 
 const initialState = {
-  cartItems: [],
-  amount: 0,
-  loginPage: false,
+  todos: [],
+  email: "",
+  username: "",
+  password: "",
+  isLoading: true,
+  isLogedIn: false,
 };
 
 const cartSlice = createSlice({
-  name: "page",
+  name: "todo",
   initialState,
   reducers: {
-    setLoginPage: (state) => {
-      state.loginPage = true;
+    setTodos: (state, action) => {
+      state.todos = action.payload;
+    },
+    setLogin: (state) => {
+      state.isLogedIn = true;
+    },
+    setEmail: (state, action) => {
+      state.email = action.payload;
+    },
+    setUsername: (state, action) => {
+      state.username = action.payload;
+    },
+    setPassword: (state, action) => {
+      state.password = action.payload;
     },
   },
 });
-
-export const { setLoginPage } = cartSlice.actions;
-
+export const { setTodos, setLogin, setPassword, setUsername, setEmail } =
+  cartSlice.actions;
 export default cartSlice.reducer;

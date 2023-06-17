@@ -1,8 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
-
-import cartReducer from "./features/cart/cart";
+import dataReducer from "./features/data/data";
+import titleReducer from "./features/data/title";
+import todoReducer from "./features/cart/cart";
 export const store = configureStore({
   reducer: {
-    cart: cartReducer,
+    todo: todoReducer,
+    data: dataReducer,
+    title: titleReducer,
   },
 });

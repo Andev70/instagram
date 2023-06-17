@@ -7,10 +7,11 @@ import jsonwebtoken from "jsonwebtoken";
 const login = async (req, res) => {
   try {
     const { password, email } = req.body;
+    console.log(password);
 
     // check if empty string
 
-    if (password === "" || email === "") {
+    if (password === "" && email === "") {
       return res.status(401).json({ msg: "credentials empty" });
     } else if (password === "") {
       return res.status(401).json({ msg: "password empty" });
@@ -21,17 +22,20 @@ const login = async (req, res) => {
     // find user
 
     const user = await User.findOne({ email: email });
+    if (!user) {
+      return res.status(404).json({ msg: "user not found", status: "failed" });
+    }
 
     const { _id, password: hashedPassword } = user;
 
     // if not present
 
-    if (!user) return res.status({ msg: "no user found" });
-
     const comparePassword = bcrypt.compareSync(password, hashedPassword);
 
     if (!comparePassword)
-      return res.status(201).json({ msg: "incorrect password" });
+      return res
+        .status(401)
+        .json({ msg: "incorrect password", status: "failed" });
 
     // sign jwt token and send it to the user to login
 
@@ -45,7 +49,9 @@ const login = async (req, res) => {
 
     // send the success message
 
-    res.status(200).json({ JWT_TOKEN, msg: "successfully logged in" });
+    res
+      .status(200)
+      .json({ JWT_TOKEN, msg: "successfully logged in", status: "ok" });
   } catch (e) {
     console.log(e);
     res.status(500).json({ msg: ["server error", e] });

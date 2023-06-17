@@ -7,14 +7,15 @@ const signup = async (req, res) => {
     // check if user exists
     const reqEmail = request.email;
     const requestUser = await User.findOne({ email: reqEmail });
-    if (requestUser)
+    if (requestUser) {
       return res.status(401).json({ msg: "user already registered" });
+    }
 
     // check all of the at once
 
     if (
-      request.username === "" ||
-      request.password === "" ||
+      request.username === "" &&
+      request.password === "" &&
       request.email === ""
     ) {
       return res.status(401).json({ message: "require credentials" });

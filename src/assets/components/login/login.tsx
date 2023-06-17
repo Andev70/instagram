@@ -1,6 +1,40 @@
 import "./login.scss";
+import { useSelector, useDispatch } from "react-redux";
+import { useCookies } from "react-cookie";
+import { setLogin, setEmail, setPassword } from "../../../features/cart/cart";
 
 const LoginForm = () => {
+  const [cookies, setCookie, removeCookie] = useCookies(["token"]);
+  const dispatch = useDispatch();
+  if (cookies.token) {
+    dispatch(setLogin());
+  }
+  const { email, password, isLogedIn } = useSelector((state: any) => {
+    return state.todo;
+  });
+  console.log(isLogedIn);
+  const getEmail = (e: any) => {
+    const email = e.target.value;
+    dispatch(setEmail(email));
+  };
+
+  const getPassword = (e: any) => {
+    const password = e.target.value;
+    dispatch(setPassword(password));
+  };
+  const login = async () => {
+    try {
+      const res = await fetch("/api/v1/login", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ email: email, password: password }),
+      });
+      const data = res.json();
+      return data;
+    } catch (e) {
+      console.log(e.message);
+    }
+  };
   return (
     <div className="pb-[1rem]">
       <div className="p-8 lg:w-1/2 mx-auto">
@@ -17,7 +51,7 @@ const LoginForm = () => {
                   className="w-6 h-6 mr-3"
                 >
                   <path
-                    fill-rule="evenodd"
+                    fillRule="evenodd"
                     d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"
                   ></path>
                 </svg>
@@ -58,6 +92,9 @@ const LoginForm = () => {
           <form className="mt-6">
             <div className="relative">
               <input
+                onInput={(e) => {
+                  getEmail(e);
+                }}
                 className="email appearance-none border pl-12 border-gray-100 shadow-sm focus:shadow-md focus:placeholder-gray-600 transition rounded-md w-full py-3 text-gray-600 leading-tight focus:outline-none focus:ring-gray-600 focus:shadow-outline"
                 id="email"
                 type="email"
@@ -77,6 +114,9 @@ const LoginForm = () => {
             </div>
             <div className="relative mt-3">
               <input
+                onInput={(e) => {
+                  getPassword(e);
+                }}
                 className="password appearance-none border pl-12 border-gray-100 shadow-sm focus:shadow-md focus:placeholder-gray-600 transition rounded-md w-full py-3 text-gray-600 leading-tight focus:outline-none focus:ring-gray-600 focus:shadow-outline"
                 id="password"
                 type="password"
@@ -111,7 +151,21 @@ const LoginForm = () => {
               </p>
             </div>
             <div className="flex items-center justify-center mt-8">
-              <button className="login text-white py-2 px-4 uppercase rounded bg-indigo-500 hover:bg-indigo-600 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5">
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  login().then((res) => {
+                    const status = res.status;
+                    const token = res.JWT_TOKEN;
+                    if (status === "ok") {
+                      setCookie("token", token, { path: "/" });
+                      console.log(cookies.token);
+                      dispatch(setLogin());
+                    }
+                  });
+                }}
+                className="login text-white py-2 px-4 uppercase rounded bg-indigo-500 hover:bg-indigo-600 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5"
+              >
                 Sign in
               </button>
             </div>

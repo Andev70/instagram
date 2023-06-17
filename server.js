@@ -1,7 +1,8 @@
 import fs from "node:fs/promises";
 import express from "express";
 import dotenv from "dotenv";
-import expressFile from "express-fileupload";
+import cookieMiddleware from "universal-cookie-express";
+
 import cors from "cors";
 import todos from "./routes/todo-route.js";
 dotenv.config();
@@ -16,8 +17,8 @@ const app = express();
 // app.use(expressFile({ debug: true }));
 app.use(cors());
 app.use(express.json());
-
-app.use("/api/todos", todos);
+app.use(cookieMiddleware());
+app.use("/api/v1", todos);
 // Cached production assets
 const templateHtml = isProduction
   ? await fs.readFile("./dist/client/index.html", "utf-8")
