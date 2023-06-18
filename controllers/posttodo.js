@@ -1,5 +1,6 @@
 import Todo from "../models/todo-model.js";
 import jwt from "jsonwebtoken";
+import { DateTime } from "luxon";
 
 const postTodo = async (req, res) => {
   try {
@@ -12,11 +13,19 @@ const postTodo = async (req, res) => {
       return res.status(401).json({ msg: "authentication failed" });
     }
     // check empty field
+    const timestamp = req.body.timestamp;
 
     if (title === "") {
       return res.status(401).json({ msg: "please provite todo title" });
+    } else if (!timestamp) {
+      return res.status(401).json({ msg: "time stamp empty" });
     }
 
+    const milliSecond = timestamp;
+    const date = DateTime.fromMillis(milliSecond);
+    const formattedDate = date.toLocaleString(DateTime.DATETIME_FULL);
+
+    req.body.timestamp = formattedDate;
     // get user token from head
 
     const JWT_TOKEN = jwt.verify(authenticated, process.env.JWT_SECRET);
@@ -29,7 +38,9 @@ const postTodo = async (req, res) => {
     //  create todo
     const todo = await Todo.create(req.body);
     if (!todo) {
-      return res.status(401).json({ msg: "cannot create todo" });
+      return res
+        .status(401)
+        .json({ msg: "cannot create todo", status: "failed" });
     }
     res
       .status(201)

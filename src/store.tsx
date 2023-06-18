@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import dataReducer from "./features/data/data";
 import titleReducer from "./features/data/title";
 import todoReducer from "./features/cart/cart";
+import todoUpdater from "./features/data/update-feature/updater";
 import singleTodo from "./features/data/single-tod";
 export const store = configureStore({
   reducer: {
@@ -9,5 +10,6 @@ export const store = configureStore({
     data: dataReducer,
     title: titleReducer,
     singleTodo: singleTodo,
+    updater: todoUpdater,
   },
 });

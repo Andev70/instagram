@@ -4,6 +4,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   data: [],
+  isLoading: true,
 };
 
 const cartSlice = createSlice({
@@ -16,7 +17,10 @@ const cartSlice = createSlice({
     pushData: (state, action) => {
       state.data.push(action.payload);
     },
+    setisLoading: (state, action) => {
+      state.isLoading = action.payload;
+    },
   },
 });
-export const { setData, pushData } = cartSlice.actions;
+export const { setData, pushData, setisLoading } = cartSlice.actions;
 export default cartSlice.reducer;

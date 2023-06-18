@@ -1,4 +1,5 @@
 import {
+  TodoApp,
   PageNotFound,
   Interface,
   LoginForm,
@@ -6,6 +7,7 @@ import {
   HomeProtected,
   IfLogedin,
   TodoDetails,
+  EditTodoModal,
 } from "./assets/components/";
 import { Routes, Route, Link, Outlet } from "react-router-dom";
 
@@ -37,6 +39,7 @@ const CompleteApp = () => {
           </HomeProtected>
         }
       />
+      <Route path="/edit" element={<TodoApp />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );

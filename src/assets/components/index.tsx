@@ -5,10 +5,13 @@ import LoginForm from "./login/login";
 import SignupForm from "./signup/signup";
 import HomeProtected from "./protected/home-protected";
 import TodoDetails from "./todo-details/todo-deatails";
-
+import EditTodoModal from "./edit/edit-todo";
+import TodoApp from "./error/test/test";
 export {
+  TodoApp,
   TodoDetails,
   PageNotFound,
+  EditTodoModal,
   Interface,
   LoginForm,
   SignupForm,

@@ -1,14 +1,19 @@
 import { useCookies } from "react-cookie";
-import { setSingleTodo } from "../../../features/data/single-tod";
-import { Navigate } from "react-router-dom";
+import EditTodoModal from "../edit/edit-todo";
+
+import { setSingleTodo, setModal } from "../../../features/data/single-tod";
+
 import { resetLogin } from "../../../features/cart/cart";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 const TodoDetails = () => {
+  const { singleTodo, isEditModal } = useSelector(
+    (state: any) => state.singleTodo
+  );
   const dispatch = useDispatch();
   const [cookies] = useCookies();
   const todoId = cookies.todoId;
-  const getTodo = async (id) => {
+  const getTodo = async (id: any) => {
     try {
       const res = await fetch(`/api/v1/${id}`, {
         method: "GET",
@@ -29,14 +34,13 @@ const TodoDetails = () => {
       dispatch(setSingleTodo(res.todo));
     });
   }, []);
-  const { singleTodo } = useSelector((state) => state.singleTodo);
 
   if (!cookies.token) {
     dispatch(resetLogin());
     return;
   }
   return (
-    <div className="container mx-auto p-4">
+    <div className="container mx-auto p-4 relative">
       <div className="bg-white rounded-lg shadow p-8">
         <div className="border-b mb-4 pb-3">
           <h2 className="text-2xl font-semibold text-gray-800">Todo Details</h2>
@@ -49,10 +53,10 @@ const TodoDetails = () => {
             Title
           </label>
           <input
+            disabled
             type="text"
             id="title"
             value={singleTodo.title}
-            disabled
             className="w-full px-4 py-2 border rounded bg-gray-100 text-gray-800"
           />
         </div>
@@ -64,9 +68,9 @@ const TodoDetails = () => {
             Description
           </label>
           <textarea
+            disabled
             value={singleTodo.description}
             id="description"
-            disabled
             className="w-full px-4 py-2 border rounded bg-gray-100 text-gray-800"
           ></textarea>
         </div>
@@ -78,15 +82,35 @@ const TodoDetails = () => {
             Due Date
           </label>
           <input
+            disabled
             type="text"
             id="due-date"
-            value="2023-06-30"
-            disabled
+            value={singleTodo.timestamp}
             className="w-full px-4 py-2 border rounded bg-gray-100 text-gray-800"
           />
         </div>
+        <div className="mb-4">
+          <label
+            htmlFor="due-date"
+            className="block font-medium text-gray-700 mb-1"
+          >
+            Status
+          </label>
+          <input
+            disabled
+            type="text"
+            id="status"
+            value={singleTodo.status}
+            className="w-full px-4 py-2 border rounded bg-gray-100 text-gray-800"
+          />
+        </div>
+
         <div className="flex justify-end">
           <button
+            onClick={(e) => {
+              e.preventDefault();
+              dispatch(setModal(true));
+            }}
             type="button"
             className="btn btn-primary bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded"
           >
@@ -94,6 +118,13 @@ const TodoDetails = () => {
           </button>
         </div>
       </div>
+      {isEditModal ? (
+        <EditTodoModal
+          descriptionProp={singleTodo.description}
+          statusProp={singleTodo.status}
+          titleProp={singleTodo.title}
+        />
+      ) : null}
     </div>
   );
 };

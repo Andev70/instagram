@@ -4,6 +4,7 @@ import postTodo from "../controllers/posttodo.js";
 import login from "../controllers/login.js";
 import deleteTodo from "../controllers/del-todo.js";
 import getOneTodo from "../controllers/single-todo.js";
+import updateTodo from "../controllers/update-todo.js";
 import express from "express";
 const router = express.Router();
 
@@ -21,4 +22,5 @@ router.route("/add/todo").post(postTodo);
 router.route("/todos").get(getTodos);
 router.route("/delete").delete(deleteTodo);
 router.route("/:todo_id").get(getOneTodo);
+router.route("/update").patch(updateTodo);
 export default router;

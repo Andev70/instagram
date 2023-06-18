@@ -7,7 +7,8 @@ const todoSchema = new mongoose.Schema({
     type: String,
     default: "description is not provided",
   },
-  timestamp: { type: Number, default: Date.now() },
+  timestamp: { type: String },
+  status: { type: Boolean, default: false },
 });
 
 export default mongoose.model("todos", todoSchema);

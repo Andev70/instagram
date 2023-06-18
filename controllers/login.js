@@ -7,7 +7,6 @@ import jsonwebtoken from "jsonwebtoken";
 const login = async (req, res) => {
   try {
     const { password, email } = req.body;
-    console.log(password);
 
     // check if empty string
 
