@@ -4,7 +4,9 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   singleTodo: {},
+  isLoading: true,
   isEditModal: false,
+  updateStatus: null,
 };
 
 const cartSlice = createSlice({
@@ -17,7 +19,14 @@ const cartSlice = createSlice({
     setModal: (state, action) => {
       state.isEditModal = action.payload;
     },
+    setIsLoading: (state, action) => {
+      state.isLoading = action.payload;
+    },
+    setUpdateStatus: (state, action) => {
+      state.updateStatus = action.payload;
+    },
   },
 });
-export const { setSingleTodo, setModal } = cartSlice.actions;
+export const { setSingleTodo, setModal, setIsLoading, setUpdateStatus } =
+  cartSlice.actions;
 export default cartSlice.reducer;

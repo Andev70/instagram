@@ -1,13 +1,17 @@
 import { useCookies } from "react-cookie";
 import EditTodoModal from "../edit/edit-todo";
 
-import { setSingleTodo, setModal } from "../../../features/data/single-tod";
+import {
+  setSingleTodo,
+  setModal,
+  setIsLoading,
+} from "../../../features/data/single-tod";
 
 import { resetLogin } from "../../../features/cart/cart";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 const TodoDetails = () => {
-  const { singleTodo, isEditModal } = useSelector(
+  const { singleTodo, isEditModal, isLoading } = useSelector(
     (state: any) => state.singleTodo
   );
   const dispatch = useDispatch();
@@ -31,6 +35,7 @@ const TodoDetails = () => {
 
   useEffect(() => {
     getTodo(todoId).then((res) => {
+      dispatch(setIsLoading(false));
       dispatch(setSingleTodo(res.todo));
     });
   }, []);
@@ -56,7 +61,7 @@ const TodoDetails = () => {
             disabled
             type="text"
             id="title"
-            value={singleTodo.title}
+            value={isLoading ? "title loading..." : singleTodo.title}
             className="w-full px-4 py-2 border rounded bg-gray-100 text-gray-800"
           />
         </div>
@@ -69,7 +74,9 @@ const TodoDetails = () => {
           </label>
           <textarea
             disabled
-            value={singleTodo.description}
+            value={
+              isLoading ? "description loading..." : singleTodo.description
+            }
             id="description"
             className="w-full px-4 py-2 border rounded bg-gray-100 text-gray-800"
           ></textarea>
@@ -85,7 +92,26 @@ const TodoDetails = () => {
             disabled
             type="text"
             id="due-date"
-            value={singleTodo.timestamp}
+            value={isLoading ? "date loading..." : singleTodo.timestamp}
+            className="w-full px-4 py-2 border rounded bg-gray-100 text-gray-800"
+          />
+        </div>
+        <div className="mb-4">
+          <label
+            htmlFor="edit-status"
+            className="block font-medium text-gray-700 mb-1"
+          >
+            Edit status
+          </label>
+          <input
+            disabled
+            type="text"
+            id="edit-status"
+            value={
+              isLoading
+                ? "edit status loading..."
+                : `edited ${singleTodo.__v} times`
+            }
             className="w-full px-4 py-2 border rounded bg-gray-100 text-gray-800"
           />
         </div>
@@ -100,7 +126,7 @@ const TodoDetails = () => {
             disabled
             type="text"
             id="status"
-            value={singleTodo.status}
+            value={isLoading ? "status loading..." : singleTodo.status}
             className="w-full px-4 py-2 border rounded bg-gray-100 text-gray-800"
           />
         </div>
@@ -123,6 +149,7 @@ const TodoDetails = () => {
           descriptionProp={singleTodo.description}
           statusProp={singleTodo.status}
           titleProp={singleTodo.title}
+          version={singleTodo.__v}
         />
       ) : null}
     </div>

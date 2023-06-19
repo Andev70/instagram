@@ -2,6 +2,7 @@ import "./login.scss";
 import { useSelector, useDispatch } from "react-redux";
 import { useCookies } from "react-cookie";
 import { setLogin, setEmail, setPassword } from "../../../features/cart/cart";
+import { Link } from "react-router-dom";
 
 const LoginForm = () => {
   const [cookies, setCookie, removeCookie] = useCookies(["token"]);
@@ -153,14 +154,18 @@ const LoginForm = () => {
               <button
                 onClick={(e) => {
                   e.preventDefault();
-                  login().then((res) => {
-                    const status = res.status;
-                    const token = res.JWT_TOKEN;
-                    if (status === "ok") {
-                      setCookie("token", token, { path: "/" });
-                      dispatch(setLogin());
-                    }
-                  });
+                  if (password && email) {
+                    login().then((res) => {
+                      const status = res.status;
+                      const token = res.JWT_TOKEN;
+                      if (status === "ok") {
+                        setCookie("token", token, { path: "/" });
+                        dispatch(setLogin());
+                      }
+                    });
+                  } else {
+                    console.log("empty");
+                  }
                 }}
                 className="login text-white py-2 px-4 uppercase rounded bg-indigo-500 hover:bg-indigo-600 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5"
               >
@@ -172,12 +177,15 @@ const LoginForm = () => {
       </div>
       <div className="flex items-center justify-center">
         <span className="text-gray-600 text-sm">Don't have an account?</span>
-        <a
-          href="#"
-          className="text-sm ml-2 text-blue-600 font-bold hover:text-blue-800"
-        >
-          Signup
-        </a>
+        <Link to="/signup/email">
+          {" "}
+          <a
+            href="#"
+            className="text-sm ml-2 text-blue-600 font-bold hover:text-blue-800"
+          >
+            Signup
+          </a>
+        </Link>
       </div>
     </div>
   );

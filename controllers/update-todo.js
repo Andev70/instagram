@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 
 const updateTodo = async (req, res) => {
   try {
-    const { title, description, status, id } = req.body;
+    const { title, description, status, id, __v } = req.body;
     const token = req.headers.authorization;
     if (!token) {
       return res
@@ -19,7 +19,7 @@ const updateTodo = async (req, res) => {
 
     const updatedTodo = await Todo.findOneAndUpdate(
       { _id: id, userId: userId },
-      { title: title, description: description, status: status }
+      { title: title, description: description, status: status, __v: __v }
     );
     if (!updatedTodo) {
       return res.status(401).json({ msg: "cannot update", status: "failed" });

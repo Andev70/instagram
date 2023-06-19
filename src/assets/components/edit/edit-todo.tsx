@@ -2,7 +2,6 @@ import "./edit.scss";
 import { setModal, setSingleTodo } from "../../../features/data/single-tod";
 import { useSelector, useDispatch } from "react-redux";
 import {
-  setStatus,
   setDescription,
   setTitle,
 } from "../../../features/data/update-feature/updater";
@@ -10,13 +9,17 @@ import { useCookies } from "react-cookie";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
+import { setStatus } from "../../../features/data/data";
 
-const EditTodoModal = ({ descriptionProp, titleProp, statusProp }: any) => {
+const EditTodoModal = ({
+  descriptionProp,
+  titleProp,
+  statusProp,
+  version,
+}: any) => {
+  const { status } = useSelector((state: any) => state.data);
   const [cookies, setCookie, removeCookie] = useCookies();
-  const { description, title, status } = useSelector(
-    (state: any) => state.updater
-  );
-  let state: any = statusProp;
+  const { description, title } = useSelector((state: any) => state.updater);
 
   const dispatch = useDispatch();
 
@@ -26,8 +29,9 @@ const EditTodoModal = ({ descriptionProp, titleProp, statusProp }: any) => {
       {
         title: title,
         description: description,
-        status: state,
+        status: status,
         id: cookies.todoId,
+        __v: version + 1,
       },
       {
         headers: {
@@ -85,9 +89,9 @@ const EditTodoModal = ({ descriptionProp, titleProp, statusProp }: any) => {
             className="w-full border rounded p-2"
             onChange={(e) => {
               if (e.target.value === "true") {
-                state = true;
+                dispatch(setStatus(true));
               } else if (e.target.value === "false") {
-                state = false;
+                dispatch(setStatus(false));
               }
             }}
             placeholder="eg: true or false"
@@ -128,6 +132,7 @@ const EditTodoModal = ({ descriptionProp, titleProp, statusProp }: any) => {
             className="bg-blue-500 text-white px-4 py-2 rounded"
             onClick={(e) => {
               refetch();
+              dispatch(setModal(false));
             }}
           >
             Save

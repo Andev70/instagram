@@ -7,7 +7,9 @@ import HomeProtected from "./protected/home-protected";
 import TodoDetails from "./todo-details/todo-deatails";
 import EditTodoModal from "./edit/edit-todo";
 import TodoApp from "./error/test/test";
+import Navbar from "./navbar/navbar.jsx";
 export {
+  Navbar,
   TodoApp,
   TodoDetails,
   PageNotFound,

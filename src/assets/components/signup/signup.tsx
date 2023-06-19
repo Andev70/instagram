@@ -9,6 +9,7 @@ import {
 } from "../../../features/signup/signup.jsx";
 import { Navigate } from "react-router-dom";
 import { useEffect } from "react";
+import { useCookies } from "react-cookie";
 
 const SignupForm = () => {
   {
@@ -98,7 +99,11 @@ const SignupForm = () => {
           <button
             onClick={(e) => {
               e.preventDefault();
-              refetch();
+              if (username && password && email) {
+                refetch();
+              } else {
+                console.log("empty");
+              }
             }}
             type="submit"
             className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
