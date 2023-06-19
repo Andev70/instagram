@@ -24,7 +24,7 @@ const cartSlice = createSlice({
     setEmail: (state, action) => {
       state.email = action.payload;
     },
-    setUsername: (state, action) => {
+    setUsername: (state: any, action: any) => {
       state.username = action.payload;
     },
     setPassword: (state, action) => {

@@ -17,7 +17,7 @@ ReactDOM.hydrateRoot(
         <CookiesProvider>
           <QueryClientProvider client={clienter}>
             <App />
-            <ReactQueryDevtools />
+            <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
           </QueryClientProvider>
         </CookiesProvider>
       </Router>

@@ -3,14 +3,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { setData, pushData, setisLoading } from "../../../features/data/data";
 import { setTitle } from "../../../features/data/title";
 import { useCookies } from "react-cookie";
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
 const Interface = () => {
   const [cookies, setCookie, removeCookie] = useCookies();
-  const { data, isLoading } = useSelector((state) => state.data);
+  const { data, isLoading } = useSelector((state: any) => state.data);
 
   const token = cookies.token;
   const delTodo = async (e: any) => {
@@ -32,7 +32,7 @@ const Interface = () => {
   };
 
   const dispatch = useDispatch();
-  const { todoTitle } = useSelector((state) => state.title);
+  const { todoTitle } = useSelector((state: any) => state.title);
   const fetchTodos = async () => {
     try {
       const res = await fetch("/api/v1/todos", {
@@ -64,7 +64,7 @@ const Interface = () => {
       });
       const data = res.json();
       return data;
-    } catch (e) {
+    } catch (e: any) {
       console.log(e.message);
     }
   };

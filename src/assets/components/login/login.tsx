@@ -9,10 +9,9 @@ const LoginForm = () => {
   if (cookies.token) {
     dispatch(setLogin());
   }
-  const { email, password, isLogedIn } = useSelector((state: any) => {
+  const { email, password } = useSelector((state: any) => {
     return state.todo;
   });
-  console.log(isLogedIn);
   const getEmail = (e: any) => {
     const email = e.target.value;
     dispatch(setEmail(email));
@@ -31,7 +30,7 @@ const LoginForm = () => {
       });
       const data = res.json();
       return data;
-    } catch (e) {
+    } catch (e: any) {
       console.log(e.message);
     }
   };
@@ -159,7 +158,6 @@ const LoginForm = () => {
                     const token = res.JWT_TOKEN;
                     if (status === "ok") {
                       setCookie("token", token, { path: "/" });
-                      console.log(cookies.token);
                       dispatch(setLogin());
                     }
                   });

@@ -53,7 +53,7 @@ const signup = async (req, res) => {
 
     // let them  know that the use is created successfully
 
-    res.status(201).json({ msg: "registered successfully" });
+    res.status(201).json({ msg: "registered successfully", status: "ok" });
   } catch (e) {
     console.log(e);
     res.status(500).json({ message: ["server error", e] });
